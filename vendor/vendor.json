@@ -16,10 +16,10 @@
 			"revisionTime": "2016-02-21T10:44:43Z"
 		},
 		{
-			"checksumSHA1": "izWnjg9a1oBPY4UBMi2REorBm68=",
-			"path": "github.com/fsnotify/fsevents",
-			"revision": "8b9e69e6c151001d0eb8a7cf37583265dfc6d6e4",
-			"revisionTime": "2016-05-19T18:46:26Z"
+			"checksumSHA1": "x2Km0Qy3WgJJnV19Zv25VwTJcBM=",
+			"path": "github.com/fsnotify/fsnotify",
+			"revision": "4da3e2cfbabc9f751898f250b49f2439785783a1",
+			"revisionTime": "2017-03-29T04:21:07Z"
 		},
 		{
 			"checksumSHA1": "d9PxF1XQGLMJZRct2R8qVM/eYlE=",
@@ -90,10 +90,10 @@
 			"revisionTime": "2014-10-17T18:24:38Z"
 		},
 		{
-			"checksumSHA1": "ZgMa4n4BsLjiIXxlubbFa4IIdJY=",
-			"path": "golang.org/x/exp/inotify",
-			"revision": "6e7e2f19a28075b32d17498f00c56515d22f637c",
-			"revisionTime": "2016-08-04T03:42:47Z"
+			"checksumSHA1": "wpWClDus8W+4nf59NoxJY5Omz6M=",
+			"path": "golang.org/x/sys/unix",
+			"revision": "bf42f188b9bc6f2cf5b8ee5a912ef1aedd0eba4c",
+			"revisionTime": "2017-11-10T14:41:19Z"
 		},
 		{
 			"checksumSHA1": "WiyCOMvfzRdymImAJ3ME6aoYUdM=",

@@ -4,7 +4,7 @@ import (
 	"crypto/tls"
 	"net/http"
 
-	"bitbucket.org/bpollack/puma-dev/dev/launch"
+	"bitbucket.org/bpollack/jewelcat/dev/launch"
 
 	"gopkg.in/tomb.v2"
 )

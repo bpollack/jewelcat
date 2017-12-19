@@ -10,8 +10,8 @@ import (
 	"syscall"
 	"time"
 
-	"bitbucket.org/bpollack/puma-dev/dev"
-	"bitbucket.org/bpollack/puma-dev/homedir"
+	"bitbucket.org/bpollack/jewelcat/dev"
+	"bitbucket.org/bpollack/jewelcat/homedir"
 )
 
 var (
@@ -20,9 +20,9 @@ var (
 	fHTTPPort = flag.Int("http-port", 9280, "port to listen on http for")
 	fTLSPort  = flag.Int("https-port", 9283, "port to listen on https for")
 	fSysBind  = flag.Bool("sysbind", false, "bind to ports 80 and 443")
-	fDir      = flag.String("dir", "~/.puma-dev", "directory to watch for apps")
+	fDir      = flag.String("dir", "~/.jewelcat", "directory to watch for apps")
 	fTimeout  = flag.Duration("timeout", 15*60*time.Second, "how long to let an app idle for")
-	fStop     = flag.Bool("stop", false, "Stop all puma-dev servers")
+	fStop     = flag.Bool("stop", false, "Stop all jewelcat servers")
 )
 
 func main() {
@@ -35,7 +35,7 @@ func main() {
 	if *fStop {
 		err := dev.Stop()
 		if err != nil {
-			log.Fatalf("Unable to stop puma-dev servers: %s", err)
+			log.Fatalf("Unable to stop jewelcat servers: %s", err)
 		}
 		return
 	}

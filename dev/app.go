@@ -15,8 +15,8 @@ import (
 	"sync"
 	"time"
 
-	"bitbucket.org/bpollack/puma-dev/linebuffer"
-	"bitbucket.org/bpollack/puma-dev/watch"
+	"bitbucket.org/bpollack/jewelcat/linebuffer"
+	"bitbucket.org/bpollack/jewelcat/watch"
 	"github.com/vektra/errors"
 	"gopkg.in/tomb.v2"
 )
@@ -246,10 +246,10 @@ if test -e .powenv; then
 fi
 
 if test -e Gemfile && bundle exec puma -V &>/dev/null; then
-	exec bundle exec puma -C $CONFIG --tag puma-dev:%s -w $WORKERS -t 0:$THREADS -b unix:%s
+	exec bundle exec puma -C $CONFIG --tag jewelcat:%s -w $WORKERS -t 0:$THREADS -b unix:%s
 fi
 
-exec puma -C $CONFIG --tag puma-dev:%s -w $WORKERS -t 0:$THREADS -b unix:%s'
+exec puma -C $CONFIG --tag jewelcat:%s -w $WORKERS -t 0:$THREADS -b unix:%s'
 `
 
 func (pool *AppPool) LaunchApp(name, dir string) (*App, error) {
@@ -259,7 +259,7 @@ func (pool *AppPool) LaunchApp(name, dir string) (*App, error) {
 		return nil, err
 	}
 
-	socket := filepath.Join(tmpDir, fmt.Sprintf("puma-dev-%d.sock", os.Getpid()))
+	socket := filepath.Join(tmpDir, fmt.Sprintf("jewelcat-%d.sock", os.Getpid()))
 
 	shell := os.Getenv("SHELL")
 

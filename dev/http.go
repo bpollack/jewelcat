@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
+	"bitbucket.org/bpollack/jewelcat/httpu"
+	"bitbucket.org/bpollack/jewelcat/httputil"
 	"github.com/bmizerany/pat"
-	"bitbucket.org/bpollack/puma-dev/httpu"
-	"bitbucket.org/bpollack/puma-dev/httputil"
 )
 
 type HTTPServer struct {
@@ -202,7 +202,7 @@ func (h *HTTPServer) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 			req.Method, req.URL.Path, req.Host)
 	}
 
-	if req.Host == "puma-dev" {
+	if req.Host == "jewelcat" {
 		h.mux.ServeHTTP(w, req)
 	} else {
 		h.proxy.ServeHTTP(w, req)

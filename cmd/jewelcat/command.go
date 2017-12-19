@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"bitbucket.org/bpollack/puma-dev/homedir"
+	"bitbucket.org/bpollack/jewelcat/homedir"
 	"github.com/vektra/errors"
 )
 

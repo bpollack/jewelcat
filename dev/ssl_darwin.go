@@ -6,7 +6,7 @@ import (
 	"os"
 	"os/exec"
 
-	"bitbucket.org/bpollack/puma-dev/homedir"
+	"bitbucket.org/bpollack/jewelcat/homedir"
 )
 
 const supportDir = "~/Library/Application Support/io.puma.dev"

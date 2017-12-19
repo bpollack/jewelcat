@@ -6,7 +6,7 @@ import (
 	"io"
 	"time"
 
-	"bitbucket.org/bpollack/puma-dev/linebuffer"
+	"bitbucket.org/bpollack/jewelcat/linebuffer"
 )
 
 type Events struct {

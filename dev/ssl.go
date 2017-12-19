@@ -16,8 +16,8 @@ import (
 	"sync"
 	"time"
 
+	"bitbucket.org/bpollack/jewelcat/homedir"
 	"github.com/hashicorp/golang-lru"
-	"bitbucket.org/bpollack/puma-dev/homedir"
 	"github.com/vektra/errors"
 )
 
@@ -58,7 +58,7 @@ func SetupOurCert() error {
 		SerialNumber: serialNumber,
 		Subject: pkix.Name{
 			Organization: []string{"Developer Certificate"},
-			CommonName:   "Puma-dev CA",
+			CommonName:   "jewelcat CA",
 		},
 		NotBefore:             notBefore,
 		NotAfter:              notAfter,
@@ -160,7 +160,7 @@ func makeCert(
 	cert := &x509.Certificate{
 		SerialNumber: serialNumber,
 		Subject: pkix.Name{
-			Organization: []string{"Puma-dev Signed"},
+			Organization: []string{"jewelcat Signed"},
 			CommonName:   name,
 		},
 		NotBefore:   notBefore,

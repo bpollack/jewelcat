@@ -18,7 +18,7 @@ import (
 	"strings"
 	"sync"
 
-	"bitbucket.org/bpollack/puma-dev/httpu/internal"
+	"bitbucket.org/bpollack/jewelcat/httpu/internal"
 )
 
 // ErrLineTooLong is returned when reading request or response bodies

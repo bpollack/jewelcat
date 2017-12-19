@@ -1,6 +1,6 @@
 # jewelcat: A fast, zero-config development server for OS X and Linux
 
-jewelcat is a fork of `jewelcat`. It's a direct response to the large backlog of pull-requests on jewelcat.
+jewelcat is a fork of `puma-dev`. It's a direct response to the large backlog of pull-requests on puma-dev.
 
 ## Highlights
 
@@ -11,8 +11,8 @@ jewelcat is a fork of `jewelcat`. It's a direct response to the large backlog of
 
 Pow doesn't support rack.hijack and thus not websockets and thus not actioncable. So for all those new Rails 5 apps, pow is a no-go. jewelcat fills that hole. jewelcat also goes one step further and provides zero-config https support to your development environment, as well as offering Linux support.
 
-### Why not just use `jewelcat`?
-`jewelcat`, while actively maintained, is *incredibly* slow to accept pull requests. jewelcat aims to fix that by being responsive to any incoming pull requests and issues.
+### Why not just use `puma-dev`?
+`puma-dev`, while actively maintained, is *incredibly* slow to accept pull requests. jewelcat aims to fix that by being responsive to any incoming pull requests and issues.
 
 ## Install
 
@@ -23,7 +23,7 @@ Pow doesn't support rack.hijack and thus not websockets and thus not actioncable
 * Run `jewelcat -install` to configure jewelcat to run in the background on ports 80 and 443 with the domain `.test`.
 
 *NOTE:* if you had pow installed before in the system, please make sure to run
-pow's uninstall script. Read more details in [the pow manual](http://pow.cx/manual.html#section_1.2). Likewise, if you had `jewelcat` installed, you'll need to uninstall that first as well.
+pow's uninstall script. Read more details in [the pow manual](http://pow.cx/manual.html#section_1.2). Likewise, if you had `puma-dev` installed, you'll need to uninstall that first as well.
 
 #### .test domain
 
@@ -36,7 +36,7 @@ There are 2 options to allow jewelcat to listen on port 80 and 443.
 1. `sudo setcap CAP_NET_BIND_SERVICE=+eip /path/to/jewelcat`
 2. Use `authbind`.
 
-You don't need to bind to port 80/443 to use jewelcat but obviously it makes using the `.dev` domain much nicer.
+You don't need to bind to port 80/443 to use jewelcat but obviously it makes using the `.test` domain much nicer.
 
 There is a shortcut for binding to 80/443 by passing `-sysbind` which overrides `-http-port` and `-https-port`.
 
@@ -110,7 +110,7 @@ Or to proxy to another host: `echo 10.3.1.2:9292 > ~/.jewelcat/awesome-elsewhere
 
 ### HTTPS
 
-jewelcat automatically makes the apps available via SSL as well. When you first run jewelcat, it will have likely caused a dialog to appear to put in your password. What happened there was jewelcat generates its own CA certification that is stored in `~/Library/Application Support/io.puma.dev/cert.pem`.
+jewelcat automatically makes the apps available via SSL as well. When you first run jewelcat, it will have likely caused a dialog to appear to put in your password. What happened there was jewelcat generates its own CA certification that is stored in `~/Library/Application Support/org.bitquabit.bpollack.jewelcat/cert.pem`.
 
 That CA cert is used to dynamically create certificates for your apps when access to them is requested. It automatically happens, no configuration necessary. The certs are stored entirely in memory so future restarts of jewelcat simply generate new ones.
 

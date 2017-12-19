@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/bmizerany/pat"
-	"github.com/puma/puma-dev/httpu"
-	"github.com/puma/puma-dev/httputil"
+	"bitbucket.org/bpollack/puma-dev/httpu"
+	"bitbucket.org/bpollack/puma-dev/httputil"
 )
 
 type HTTPServer struct {

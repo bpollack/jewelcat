@@ -9,7 +9,7 @@ import (
 	"strconv"
 
 	"github.com/kardianos/osext"
-	"github.com/puma/puma-dev/homedir"
+	"bitbucket.org/bpollack/puma-dev/homedir"
 	"github.com/vektra/errors"
 )
 

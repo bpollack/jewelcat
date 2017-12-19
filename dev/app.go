@@ -15,8 +15,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/puma/puma-dev/linebuffer"
-	"github.com/puma/puma-dev/watch"
+	"bitbucket.org/bpollack/puma-dev/linebuffer"
+	"bitbucket.org/bpollack/puma-dev/watch"
 	"github.com/vektra/errors"
 	"gopkg.in/tomb.v2"
 )

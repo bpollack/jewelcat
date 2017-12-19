@@ -17,7 +17,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/golang-lru"
-	"github.com/puma/puma-dev/homedir"
+	"bitbucket.org/bpollack/puma-dev/homedir"
 	"github.com/vektra/errors"
 )
 

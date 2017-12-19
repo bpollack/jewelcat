@@ -10,8 +10,8 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/puma/puma-dev/dev"
-	"github.com/puma/puma-dev/homedir"
+	"bitbucket.org/bpollack/puma-dev/dev"
+	"bitbucket.org/bpollack/puma-dev/homedir"
 )
 
 var (

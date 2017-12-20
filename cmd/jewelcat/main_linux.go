@@ -104,7 +104,7 @@ func main() {
 
 	http.Setup()
 
-	fmt.Printf("! Puma dev listening on http and https\n")
+	fmt.Printf("! jewelcat dev listening on http and https\n")
 
 	go http.ServeTLS()
 

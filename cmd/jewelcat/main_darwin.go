@@ -32,7 +32,6 @@ var (
 	fInstallPort = flag.Int("install-port", 80, "Port to run jewelcat on when installed")
 	fInstallTLS  = flag.Int("install-https-port", 443, "Port to run jewelcat for SSL on when installed")
 
-	fCleanup   = flag.Bool("cleanup", false, "Cleanup old system settings")
 	fUninstall = flag.Bool("uninstall", false, "Uninstall jewelcat as a user service")
 )
 
@@ -47,11 +46,6 @@ func main() {
 	}
 
 	domains := strings.Split(*fDomains, ":")
-
-	if *fCleanup {
-		dev.Cleanup()
-		return
-	}
 
 	if *fUninstall {
 		dev.Uninstall(domains)
@@ -169,7 +163,7 @@ func main() {
 		tlsSocketName = "SocketTLS"
 	}
 
-	fmt.Printf("! Puma dev listening on http and https\n")
+	fmt.Printf("! jewelcat dev listening on http and https\n")
 
 	go http.ServeTLS(tlsSocketName)
 

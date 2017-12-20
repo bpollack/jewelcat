@@ -9,7 +9,7 @@ import (
 	"bitbucket.org/bpollack/jewelcat/homedir"
 )
 
-const supportDir = "~/Library/Application Support/io.puma.dev"
+const supportDir = "~/Library/Application Support/org.bitbucket.bpollack.jewelcat"
 
 func loginKeyChain() (string, error) {
 

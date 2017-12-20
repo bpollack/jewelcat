@@ -74,27 +74,6 @@ func Setup() error {
 	return nil
 }
 
-func Cleanup() {
-	oldSetup := "/Library/LaunchDaemons/io.puma.devsetup.plist"
-
-	exec.Command("launchctl", "unload", oldSetup).Run()
-	os.Remove(oldSetup)
-	exec.Command("pfctl", "-F", "nat", "-a", "com.apple/250.PumaDevFirewall").Run()
-
-	fmt.Printf("* Expunged old puma dev system rules\n")
-
-	// Fix perms of the LaunchAgent
-	uid, err1 := strconv.Atoi(os.Getenv("SUDO_UID"))
-	gid, err2 := strconv.Atoi(os.Getenv("SUDO_GID"))
-
-	if err1 == nil && err2 == nil {
-		plist := homedir.MustExpand("~/Library/LaunchAgents/io.puma.dev.plist")
-		os.Chown(plist, uid, gid)
-
-		fmt.Printf("* Fixed permissions of user LaunchAgent\n")
-	}
-}
-
 func InstallIntoSystem(listenPort, tlsPort int, dir, domains, timeout string) error {
 	err := SetupOurCert()
 	if err != nil {
@@ -157,7 +136,7 @@ func InstallIntoSystem(listenPort, tlsPort int, dir, domains, timeout string) er
 	logPath := homedir.MustExpand("~/Library/Logs/jewelcat.log")
 
 	plistDir := homedir.MustExpand("~/Library/LaunchAgents")
-	plist := homedir.MustExpand("~/Library/LaunchAgents/io.puma.dev.plist")
+	plist := homedir.MustExpand("~/Library/LaunchAgents/org.bitbucket.bpollack.jewelcat.plist")
 
 	err = os.MkdirAll(plistDir, 0644)
 

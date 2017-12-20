@@ -9,6 +9,7 @@ import (
 
 var fVersion = flag.Bool("V", false, "display version info")
 
+// Version must be public to allow linker to fix version number
 var Version = "devel"
 
 func allCheck() {

@@ -110,7 +110,7 @@ Or to proxy to another host: `echo 10.3.1.2:9292 > ~/.jewelcat/awesome-elsewhere
 
 ### HTTPS
 
-jewelcat automatically makes the apps available via SSL as well. When you first run jewelcat, it will have likely caused a dialog to appear to put in your password. What happened there was jewelcat generates its own CA certification that is stored in `~/Library/Application Support/org.bitquabit.bpollack.jewelcat/cert.pem`.
+jewelcat automatically makes the apps available via SSL as well. When you first run jewelcat, it will have likely caused a dialog to appear to put in your password. What happened there was jewelcat generates its own CA certification that is stored in `~/Library/Application Support/org.bitbucket.bpollack.jewelcat/cert.pem`.
 
 That CA cert is used to dynamically create certificates for your apps when access to them is requested. It automatically happens, no configuration necessary. The certs are stored entirely in memory so future restarts of jewelcat simply generate new ones.
 

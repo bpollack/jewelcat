@@ -16,7 +16,7 @@ func command() error {
 	case "link":
 		return link()
 	default:
-		return fmt.Errorf("Unknown command: %s\n", flag.Arg(0))
+		return fmt.Errorf("unknown command: %s", flag.Arg(0))
 	}
 }
 

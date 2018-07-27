@@ -12,7 +12,9 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"sync"
+	"syscall"
 	"time"
 
 	"bitbucket.org/bpollack/jewelcat/linebuffer"
@@ -34,7 +36,8 @@ type App struct {
 	Public  bool
 	Events  *Events
 
-	lines linebuffer.LineBuffer
+	lines       linebuffer.LineBuffer
+	lastLogLine string
 
 	address string
 	dir     string
@@ -86,7 +89,7 @@ func (a *App) Kill(reason string) error {
 	)
 
 	fmt.Printf("! Killing '%s' (%d)\n", a.Name, a.Command.Process.Pid)
-	err := a.Command.Process.Kill()
+	err := a.Command.Process.Signal(syscall.SIGTERM)
 	if err != nil {
 		a.eventAdd("killing_error",
 			"pid", a.Command.Process.Pid,
@@ -107,6 +110,7 @@ func (a *App) watch() error {
 			line, err := r.ReadString('\n')
 			if line != "" {
 				a.lines.Append(line)
+				a.lastLogLine = line
 				fmt.Fprintf(os.Stdout, "%s[%d]: %s", a.Name, a.Command.Process.Pid, line)
 			}
 
@@ -124,7 +128,7 @@ func (a *App) watch() error {
 	select {
 	case err = <-c:
 		reason = "stdout/stderr closed"
-		err = errUnexpectedExit
+		err = fmt.Errorf("%s:\n\t%s", errUnexpectedExit, a.lastLogLine)
 	case <-a.t.Dying():
 		err = nil
 	}
@@ -262,6 +266,11 @@ func (pool *AppPool) LaunchApp(name, dir string) (*App, error) {
 	socket := filepath.Join(tmpDir, fmt.Sprintf("jewelcat-%d.sock", os.Getpid()))
 
 	shell := os.Getenv("SHELL")
+
+	if shell == "" {
+		fmt.Printf("! SHELL env var not set, using /bin/bash by default")
+		shell = "/bin/bash"
+	}
 
 	cmd := exec.Command(shell, "-l", "-i", "-c",
 		fmt.Sprintf(executionShell, dir, name, socket, name, socket))
@@ -452,7 +461,35 @@ func (pool *AppPool) App(name string) (*App, error) {
 	destPath, _ := os.Readlink(path)
 
 	if err != nil {
-		if os.IsNotExist(err) {
+		if !os.IsNotExist(err) {
+			return nil, err
+		}
+
+		// Check there might be a link there but it's not valid
+		_, err := os.Lstat(path)
+		if err == nil {
+			fmt.Printf("! Bad symlink detected '%s'. Destination '%s' doesn't exist\n", path, destPath)
+			pool.Events.Add("bad_symlink", "path", path, "dest", destPath)
+		}
+
+		// If possible, also try expanding - to / to allow for apps in subdirs
+		possible := strings.Replace(name, "-", "/", -1)
+		if possible == name {
+			return nil, ErrUnknownApp
+		}
+
+		path = filepath.Join(pool.Dir, possible)
+
+		pool.Events.Add("app_lookup", "path", path)
+
+		stat, err = os.Stat(path)
+		destPath, _ = os.Readlink(path)
+
+		if err != nil {
+			if !os.IsNotExist(err) {
+				return nil, err
+			}
+
 			// Check there might be a link there but it's not valid
 			_, err := os.Lstat(path)
 			if err == nil {
@@ -462,8 +499,6 @@ func (pool *AppPool) App(name string) (*App, error) {
 
 			return nil, ErrUnknownApp
 		}
-
-		return nil, err
 	}
 
 	canonicalName := name

@@ -6,8 +6,13 @@ jewelcat is a fork of `puma-dev`. It's a direct response to the large backlog of
 
 * Easy startup and idle shutdown of rack/rails apps
 * Easy access to the apps using the `.test` subdomain **(configurable)**
+* Run multiple custom domains at the same time, e.g. `.test` * `.puma`.
 
-### Why not just use pow?
+### Why choose `jewlcat`?
+* __https__ - it Just Works!
+* Supports __Rails 5 actioncable__ via rack.hijack websockets
+* Supports Mac __and__ Linux
+* The honorary `pow` [is no longer maintained](https://github.com/basecamp/pow/commit/310f260d08159cf86a52df7ddb5a3bd53a94614f)
 
 Pow doesn't support rack.hijack and thus not websockets and thus not actioncable. So for all those new Rails 5 apps, pow is a no-go. jewelcat fills that hole. jewelcat also goes one step further and provides zero-config https support to your development environment, as well as offering Linux support.
 
@@ -25,7 +30,7 @@ Pow doesn't support rack.hijack and thus not websockets and thus not actioncable
 *NOTE:* if you had pow installed before in the system, please make sure to run
 pow's uninstall script. Read more details in [the pow manual](http://pow.cx/manual.html#section_1.2). Likewise, if you had `puma-dev` installed, you'll need to uninstall that first as well.
 
-#### .test domain
+#### Domains (.test or similar)
 
 Install the [dev-tld-resolver](https://github.com/puma/dev-tld-resolver) to make domains resolve.
 
@@ -39,6 +44,13 @@ There are 2 options to allow jewelcat to listen on port 80 and 443.
 You don't need to bind to port 80/443 to use jewelcat but obviously it makes using the `.test` domain much nicer.
 
 There is a shortcut for binding to 80/443 by passing `-sysbind` which overrides `-http-port` and `-https-port`.
+
+### Important Note On Ports and Domain Names
+
+* Default ports are 80 and 443
+* Default domain is `.test`. Previously it was `.dev`, but it is owned by Google and since Dec 2017 **HSTS only** with real websites hosted there.
+  * Don't use .dev and .foo, as they are real domains
+* Using pow? To avoid conflicts, use different ports and domain or [uninstall pow properly](http://pow.cx/manual.html#section_1.2).
 
 ### Options
 
@@ -100,6 +112,10 @@ Run: `jewelcat -uninstall`
 
 Simply symlink your apps directory into `~/.jewelcat`! That's it!
 
+### Sub Directories
+
+If you have a more complex set of applications you want puma-dev to manage, you can use subdirectories under `~/.puma-dev` as well. This works by naming the app with a hyphen (`-`) where you'd have a slash (`/`) in the hostname. So for instance if you access `cool-frontend.test`, puma-dev will look for `~/.puma-dev/cool-frontend` and if it finds nothing, try `~/.puma-dev/cool/frontend`.
+
 ### Proxy support
 
 jewelcat can also proxy requests from a nice dev domain to another app. To do so, just write a file (rather than a symlink'd directory) into `~/.jewelcat` with the connection information.
@@ -130,11 +146,15 @@ In the case of rails, you need to configure rails to allow all websockets or web
 
 *Do not use disable_request_forgery_protection in production!*
 
-Or you can add something like `config.action_cable.allowed_request_origins = /(\.dev$)|^localhost$/` to allow anything under `.test` as well as `localhost`.
+Or you can add something like `config.action_cable.allowed_request_origins = /(\.test$)|^localhost$/` to allow anything under `.test` as well as `localhost`.
 
 ### xip.io
 
 jewelcat supports `xip.io` domains. It will detect them and strip them away, so that your `test` app can be accessed as `test.A.B.C.D.xip.io`.
+
+### Run multiple domains
+
+Puma-dev allows you to run multiple local domains. Handy if you're working with more than one client. Simply set up puma-dev like so: `puma-dev -install -d first-domain:second-domain`
 
 ### Static file support
 
@@ -145,6 +165,7 @@ Like pow, jewelcat support serving static files. If an app has a `public` direct
 jewelcat is starting to evolve a status API that can be used to introspect it and the apps. To access it, send a request with the `Host: jewelcat` and the path `/status`, for example: `curl -H "Host: jewelcat" localhost/status`.
 
 The status includes:
+
   * If it is booting, running, or dead
   * The directory of the app
   * The last 1024 lines the app output
